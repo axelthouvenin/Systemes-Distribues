@@ -10,11 +10,11 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
-        HttpResponse<String> response = Unirest.get("https://api.github.com/users/{user}")
-                .routeParam("user", "hansjoergschurr")
-                .asString();
 
-        System.out.println(response.getBody());
+        String username = "hansjoergschurr";
+
+        /* Depends on whether one opens the individual exercise or the entire Git repository in InteliJ */
+        String token_file = "exercice03/secret_token";
 
         HttpResponse<String> response = Unirest.get("https://api.github.com/users/{user}")
                 .routeParam("user", username)
@@ -23,7 +23,7 @@ public class Main {
         System.out.println(response.getBody());
 
 
-        try (BufferedReader br = new BufferedReader(new FileReader("secret_token"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(token_file))) {
             String token = br.readLine();
 
             HttpResponse<JsonNode> r = Unirest.get("https://api.github.com/users/{user}")
