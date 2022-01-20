@@ -58,7 +58,7 @@ public class Status {
 
         // List repos for this user
         if (this.chosen_username.equals(auth_user))
-            this.repos_url = "https://api.github.com/user/repos?per_page=100";
+            this.repos_url = "https://api.github.com/user/repos";
         else
             this.repos_url = node.getObject().getString("repos_url");
     }
