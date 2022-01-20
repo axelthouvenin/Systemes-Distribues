@@ -8,6 +8,9 @@ public class Label {
         this.description = description;
     }
 
+    public Label() {
+    }
+
     public long getId() {
         return id;
     }

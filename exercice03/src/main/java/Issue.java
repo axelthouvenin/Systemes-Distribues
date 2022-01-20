@@ -1,3 +1,6 @@
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class Issue {
@@ -6,8 +9,17 @@ public class Issue {
     private String state;
     private String title;
     private String body;
-    private Integer comments;
+
+    @JsonProperty("comments")
+    private Integer numberOfComments;
+
     private List<Label> labels;
+
+    @JsonIgnore
+    private List<Comment> comments;
+
+    public Issue() {
+    }
 
     public Issue(String title, String body) {
         this.title = title;
@@ -34,8 +46,8 @@ public class Issue {
         return body;
     }
 
-    public Integer getComments() {
-        return comments;
+    public Integer getNumberOfComments() {
+        return numberOfComments;
     }
 
     public List<Label> getLabels() {
@@ -55,7 +67,7 @@ public class Issue {
             default:
                 state_icon = "?";
         }
-        return String.format("[%d] %s '%s' %s (%d comments)", number, state_icon, title, labels, comments);
+        return String.format("[%d] %s '%s' %s (%d comments)", number, state_icon, title, labels, numberOfComments);
     }
 
     public String detailedDescription() {
@@ -65,4 +77,13 @@ public class Issue {
             return this.toString();
     }
 
+    @JsonIgnore
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    @JsonIgnore
+    public void setComments(List<Comment> comment_bodies) {
+        this.comments = comment_bodies;
+    }
 }
