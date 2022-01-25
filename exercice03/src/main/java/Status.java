@@ -135,7 +135,8 @@ public class Status {
                 chosen_repo = split[1];
             }
 
-            HttpResponse testRequest = Unirest.get("https://api.github.com/repos/{user}/{repo}")
+            HttpResponse testRequest =
+                    Unirest.get("https://api.github.com/repos/{user}/{repo}")
                     .basicAuth(auth_user, auth_token)
                     .routeParam("user", chosen_username)
                     .routeParam("repo", chosen_repo)
@@ -145,13 +146,15 @@ public class Status {
             else {
                 System.out.printf("Picked repository %s.%n", this.chosen_repo);
                 have_repo = true;
+            showRepo(this.chosen_repo);
             }
         }
     }
 
     private void showRepo(String name) {
-        HttpResponse<JsonNode> r = Unirest.get("https://api.github.com/repos/{user}/{repo}")
-                .routeParam("user", chosen_username)
+        HttpResponse<JsonNode> r =
+                Unirest.get("https://api.github.com/repos/{/user}/{repo}")
+                .routeParam("/user", chosen_username)
                 .routeParam("repo", chosen_repo)
                 .asJson();
         JSONObject repo = r.getBody().getObject();
