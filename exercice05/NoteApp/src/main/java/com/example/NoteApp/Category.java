@@ -1,5 +1,6 @@
 package com.example.NoteApp;
 
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 public class Category {

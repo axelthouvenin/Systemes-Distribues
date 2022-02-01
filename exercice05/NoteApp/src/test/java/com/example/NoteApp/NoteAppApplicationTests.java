@@ -1,5 +1,6 @@
 package com.example.NoteApp;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
 import java.util.UUID;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static
 		org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static
@@ -30,10 +33,15 @@ class NoteAppApplicationTests {
 	@Test
 	public void getNotesShouldReturnEmptyArray()
 			throws Exception {
-		String initial_data = "[{\"id\":1,\"body\":\"Buy cake\",\"title\":\"TODO\",\"category\":{\"id\":\"60d06f89-8ab4-4f0a-bbad-df9c7f500bb6\",\"name\":\"Default\"}},{\"id\":2,\"body\":\"First test\",\"title\":\"TODO\",\"category\":{\"id\":\"41c40faf-3f54-4fd7-b13b-3acadd3c2765\",\"name\":\"Test\"}},{\"id\":3,\"body\":\"Buy concert tickets\",\"title\":\"concert\",\"category\":{\"id\":\"60d06f89-8ab4-4f0a-bbad-df9c7f500bb6\",\"name\":\"Default\"}},{\"id\":4,\"body\":\"Second test\",\"title\":\"TODO\",\"category\":{\"id\":\"41c40faf-3f54-4fd7-b13b-3acadd3c2765\",\"name\":\"Test\"}}]";
-		this.mockMvc.perform(get("/notes"))
+		ObjectMapper objectMapper = new ObjectMapper();
+		String response = this.mockMvc.perform(get("/notes"))
 				.andDo(print())
-				.andExpect(status().isOk());
+				.andExpect(status().isOk())
+				.andReturn().getResponse().getContentAsString();
+		List<Category> response_category =
+				objectMapper.readValue(response, new TypeReference<List<Category>>(){});
+		assertThat(response_category).isq;
+
 	}
 
 	@Test
@@ -49,7 +57,7 @@ class NoteAppApplicationTests {
 				.andReturn().getResponse().getContentAsString();
 		Category response_category =
 				objectMapper.readValue(response, Category.class);
-		assert(response_category.getName().equals("Test"));
+		assertThat(response_category.getName()).isEqualTo("Test");
 	}
 
 	@Test
@@ -69,8 +77,8 @@ class NoteAppApplicationTests {
 				.andExpect(status().isOk())
 				.andReturn().getResponse().getContentAsString();
 		response_category = objectMapper.readValue(response, Category.class);
-		assert(response_category.getName().equals("Test"));
-		assert(response_category.getId().equals(id));
+		assertThat(response_category.getName()).isEqualTo("Test");
+		assertThat(response_category.getId()).isEqualTo(id);
 	}
 
 	@Test
