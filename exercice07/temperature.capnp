@@ -14,14 +14,15 @@ interface Town {
 interface WeatherMap {
 	findTown @0 (name :Text) -> (town :Town); # Investigate: Error handling?
 	listTowns @1 () -> (towns :List(Town));
+	toFahrenheit @2 (temperature :CelsiusTemp) -> (temperature :FahrenheitTemp);
+	toCelsius @3 (temperature :FahrenheitTemp) -> (temperature :CelsiusTemp);
 }
 
-interface CelsiusTemp {
-	getValue @0 () -> (value :Float32);
-	toFahrenheit @1 () -> (temperature :FahrenheitTemp);
+struct CelsiusTemp {
+  value @0 :Float32;
 }
 
-interface FahrenheitTemp {
-	getValue @0 () -> (value :Float32);
-	toCelsius @1 () -> (temperature :CelsiusTemp);
+struct FahrenheitTemp {
+  value @0 :Float32;
 }
+
