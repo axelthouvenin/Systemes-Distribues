@@ -40,7 +40,7 @@ class NoteAppApplicationTests {
 				.andReturn().getResponse().getContentAsString();
 		List<Category> response_category =
 				objectMapper.readValue(response, new TypeReference<List<Category>>(){});
-		assertThat(response_category).isq;
+		//assertThat(response_category).isq;
 
 	}
 
