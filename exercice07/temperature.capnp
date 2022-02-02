@@ -1,5 +1,7 @@
 @0xae47d9b20d9e659d;
 
+const qux :UInt32 = 123;
+
 interface Town {
 	currentTemperature @0 () -> (temperature :CelsiusTemp);
 	updateTemperature @2 (temperature :CelsiusTemp) -> ();
